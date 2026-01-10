@@ -1,0 +1,13 @@
+{
+  "migIndex": 1,
+  "data": [
+    {
+      "path": "assets/fonts/LemonMilkBold-gx2B3.otf",
+      "sha1": "91cef6e742a3816c1f01f41ad039dc401bf6c968"
+    },
+    {
+      "path": "assets/fonts/LemonMilkRegular-X3XE2.otf",
+      "sha1": "1f660845f7fe40ee482aa7ccda7d101d20d870fa"
+    }
+  ]
+}

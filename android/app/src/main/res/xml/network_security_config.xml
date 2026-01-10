@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<network-security-config>
+    <domain-config cleartextTrafficPermitted="true">
+        <domain includeSubdomains="true">182.184.70.16</domain> <!-- Replace with your IP or domain -->
+    </domain-config>
+    <base-config cleartextTrafficPermitted="true" />
+</network-security-config>
