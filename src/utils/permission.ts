@@ -17,3 +17,4 @@ export const requestLocationPermission = async () => {
 
   return true;
 };
+

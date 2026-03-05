@@ -15,14 +15,15 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#ffffff',
+    backgroundColor: '#272757',
   },
   spinnerText: {
     marginTop: 10,
     fontSize: 16,
     fontWeight: '600',
-    color: '#0093dd',
+    color: '#FFFFFF',
   },
 });
 
 export default Spinner;
+

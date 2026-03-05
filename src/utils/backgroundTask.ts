@@ -162,3 +162,4 @@ BackgroundFetch.registerHeadlessTask(async event => {
   console.log('[📦 HeadlessTask] Event received in background.');
   await backgroundFetchHandler();
 });
+

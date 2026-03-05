@@ -108,7 +108,7 @@ const styles = StyleSheet.create({
     height: 100,
     borderRadius: 50,
     overflow: 'hidden',
-    backgroundColor: '#f0f0f0',
+    backgroundColor: '#FFFFFF',
     justifyContent: 'center',
     alignItems: 'center',
     marginTop: '20%',
@@ -124,3 +124,4 @@ const styles = StyleSheet.create({
 });
 
 export default RoundIcon;
+

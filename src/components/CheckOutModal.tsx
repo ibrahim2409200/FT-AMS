@@ -88,7 +88,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   modalContent: {
-    backgroundColor: 'white',
+    backgroundColor: '#272757',
     padding: 20,
     borderRadius: 8,
     width: 300,
@@ -103,6 +103,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: 'bold',
     marginBottom: 15,
+    color: '#FFFFFF',
   },
   formGroup: {
     marginBottom: 15,
@@ -112,23 +113,24 @@ const styles = StyleSheet.create({
     marginBottom: 5,
     fontSize: 14,
     fontWeight: 'bold',
+    color: '#FFFFFF',
   },
   inputTouchable: {
     borderWidth: 1,
-    borderColor: '#ccc',
-    backgroundColor:'#ccc',
+    borderColor: '#FFFFFF',
+    backgroundColor:'#FFFFFF',
     borderRadius: 4,
     padding: 8,
   },
   inputText: {
     fontSize: 15,
-    color: '#333',
+    color: '#272757',
   },
   input: {
     borderWidth: 1,
     color:'black',
-    backgroundColor:'#ccc',
-    borderColor: '#ccc',
+    backgroundColor:'#FFFFFF',
+    borderColor: '#FFFFFF',
     borderRadius: 4,
     padding: 8,
     fontSize: 15,
@@ -141,16 +143,16 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     paddingHorizontal: 20,
     borderRadius: 4,
-    backgroundColor: '#2ac3aa',
+    backgroundColor: '#8686AC',
   },
   closeBtn: {
     paddingVertical: 10,
     paddingHorizontal: 20,
     borderRadius: 4,
-    backgroundColor: '#dc3545',
+    backgroundColor: '#FFFFFF',
   },
   buttonText: {
-    color: 'white',
+    color: '#272757',
     textAlign: 'center',
     fontSize: 14,
     fontWeight: 'bold',
@@ -158,3 +160,4 @@ const styles = StyleSheet.create({
 });
 
 export default CheckOutModal;
+

@@ -36,7 +36,7 @@ const LogoutPopUp: React.FC = () => {
   return (
     <View style={styles.container}>
       <TouchableOpacity onPress={showLogoutAlert} style={styles.button}>
-        <Icon name="logout" size={28} color="#0093dd" />
+        <Icon name="logout" size={28} color="#FFFFFF" />
       </TouchableOpacity>
     </View>
   );
@@ -51,8 +51,9 @@ const styles = StyleSheet.create({
   button: {
     padding: 10,
     borderRadius: 5,
-    backgroundColor: '#fff',
+    backgroundColor: '#272757',
   },
 });
 
 export default LogoutPopUp;
+

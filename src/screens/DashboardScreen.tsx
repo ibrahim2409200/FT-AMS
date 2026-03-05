@@ -27,6 +27,7 @@ import OneSignal from 'react-native-onesignal';
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../navigation/AppNavigator';
+import AttendanceBottomModal from '../components/AttendanceBottomModal';
 
 
 const {width, height} = Dimensions.get('window');
@@ -68,6 +69,7 @@ const DashboardScreen: React.FC = () => {
   const [syncData, setSyncData] = useState(true);
   const [loading, setLoading] = useState(true);
   const [showModal, setShowModal] = useState(false);
+  const [showAttendanceModal, setShowAttendanceModal] = useState(false);
   const [apiLoader, setApiLoader] = useState(false);
   const [settingsAlertShown, setSettingsAlertShown] = useState(false);
   const platform = DeviceInfo.getSystemName();
@@ -490,83 +492,82 @@ const DashboardScreen: React.FC = () => {
 
   return (
     <LinearGradient
-      colors={range ? ['#2ac3aa', '#ffffff'] : ['#ee5a51', '#ffffff']}
-      locations={[0, 0.2]}
+      colors={['#8686AC', '#272757']}
+      locations={[0, 0.15]}
       style={styles.gradient}>
-      <View style={styles.content}>
-        <RoundIcon />
-        <View>
+      <View style={styles.headerSection}>
+        <View style={styles.timeSection}>
           {loading ? (
             <View style={styles.loadingContainer}>
               <ActivityIndicator size="large" color="#008000" />
             </View>
           ) : (
             <>
-              <View
-                style={[
-                  styles.locationTab,
-                  {
-                    backgroundColor: range ? '#34b9a3' : '#ee5a51',
-                    marginLeft: range ? width * 0.44 : width * 0.37,
-                  },
-                ]}>
-                <Text style={styles.locationText}>{rangeText}</Text>
-              </View>
               <Text style={styles.timeText}>{currentTime}</Text>
               <Text style={styles.dateText}>{currentDate}</Text>
             </>
           )}
         </View>
+
+        <View
+          style={[
+            styles.locationTab,
+            {
+              backgroundColor: range ? '#1dae5f' : '#ff4d4d',
+            },
+          ]}>
+          <Text style={styles.locationText}>{rangeText}</Text>
+        </View>
       </View>
+
       <View style={styles.containerText}>
         <Text style={styles.welcometext}>Welcome,{'\n'}</Text>
         <Text style={styles.nametext}>
           {user?.nsUserInfo?.employeeName || 'User'}
         </Text>
       </View>
-      <View style={styles.buttonContainer}>
-        {!range ? (
-          <>
-            <TouchableOpacity
-              style={[styles.button, {backgroundColor: '#B8B8B8'}]}
-              disabled>
-              <Text style={styles.buttonText}> Check-In </Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={[styles.buttonOut, {backgroundColor: '#B8B8B8'}]}
-              disabled>
-              <Text style={styles.buttonText}>Check-Out</Text>
-            </TouchableOpacity>
-          </>
-        ) : (
-          <>
-            <TouchableOpacity
-              style={[
-                styles.button,
-                !isActiveButton ? {backgroundColor: '#B8B8B8'} : null,
-              ]}
-              disabled={!isActiveButton}
-              onPress={() => handleClockAction('Check In')}>
-              <Text style={styles.buttonText}>Check-In </Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={[
-                styles.buttonOut,
-                isActiveButton ? {backgroundColor: '#B8B8B8'} : null,
-              ]}
-              disabled={isActiveButton}
-              onPress={() => handleClockAction('Check Out')}>
-              <Text style={styles.buttonText}>Check-Out</Text>
-            </TouchableOpacity>
-          </>
-        )}
+      <View style={styles.buttonContainerBox}>
+        <TouchableOpacity
+          style={[
+            styles.mainButton,
+            !range ? {backgroundColor: '#B8B8B8'} : null,
+          ]}
+          disabled={!range}
+          onPress={() => setShowAttendanceModal(true)}>
+          <Text style={styles.mainButtonText}>Mark Attendance</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity
+          style={styles.mainButton}
+          onPress={() => navigation.navigate('AddEmployee')}>
+          <Text style={styles.mainButtonText}>Add Employee</Text>
+        </TouchableOpacity>
       </View>
+
+      {showAttendanceModal && (
+        <AttendanceBottomModal
+          visible={showAttendanceModal}
+          onCheckIn={() => {
+            setShowAttendanceModal(false);
+            handleClockAction('Check In');
+          }}
+          onCheckOut={() => {
+            setShowAttendanceModal(false);
+            handleClockAction('Check Out');
+          }}
+          onClose={() => setShowAttendanceModal(false)}
+          isCheckInActive={isActiveButton}
+          isInRange={range}
+          isLoading={apiLoader}
+        />
+      )}
+
       {showModal && (
         <CheckOutModal onSubmit={handleModalSubmit} onClose={closeModal} />
       )}
       {apiLoader && <LoaderModal loading={apiLoader} />}
       <Text style={styles.footer}>
-        Copyrights 2024. Powered by Dynasoft Cloud.
+        Copyrights 2026. Powered by FastymTech.
       </Text>
     </LinearGradient>
   );
@@ -574,76 +575,69 @@ const DashboardScreen: React.FC = () => {
 
 const styles = StyleSheet.create({
   gradient: {
-    flex: 1, // Use entire screen
-    justifyContent: 'space-between', // Ensures footer is pushed to the bottom
+    flex: 1,
+    justifyContent: 'space-between',
   },
-  switchContainer: {
+  headerSection: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    alignItems: 'center',
-    marginHorizontal: width * 0.05, // 5% of the screen width
-    marginTop: height * 0.2, // 20% of the screen height
+    alignItems: 'flex-start',
+    paddingHorizontal: width * 0.05,
+    paddingTop: height * 0.03,
+    gap: width * 0.04,
   },
-  switchText: {
-    fontSize: width * 0.04, // Font size responsive to screen width
-    color: '#0093dd',
-    fontWeight: '500',
+  timeSection: {
+    flex: 1,
+    alignItems: 'flex-start',
   },
-  // gradient: {
-  //   flex: 1, // Fill the entire screen
-  // },
   content: {
-    padding: width * 0.04, // 4% of screen width
+    padding: width * 0.04,
     flexDirection: 'row',
   },
   loadingContainer: {
-    alignSelf: 'center', // Center horizontally
-    marginTop: height * 0.1, // 10% of screen height
+    alignSelf: 'center',
+    marginTop: height * 0.1,
   },
   locationTab: {
-    width: '50%',
-    paddingVertical: height * 0.01, // Responsive padding
-    backgroundColor: '#34b9a3',
+    paddingVertical: height * 0.025,
+    paddingHorizontal: width * 0.04,
     justifyContent: 'center',
     alignItems: 'center',
-    borderRadius: 20,
-    alignSelf: 'flex-end',
-    marginTop: height * 0.03, // 3% of screen height
-    elevation: 15,
-    marginLeft: width * 0.37,
+    borderRadius: 12,
+    elevation: 8,
+    minWidth: width * 0.35,
   },
   locationText: {
     color: '#fff',
     fontWeight: '800',
-    fontSize: width * 0.04, // 4% of screen width
+    fontSize: width * 0.038,
   },
   timeText: {
-    fontSize: width * 0.1, // 10% of screen width
-    fontWeight: '500',
-    color: '#0093dd',
-    textAlign: 'right', // Center text
-    marginTop: height * 0.02, // 2% of screen height
+    fontSize: width * 0.11,
+    fontWeight: '600',
+    color: '#FFFFFF',
+    marginBottom: height * 0.01,
   },
   dateText: {
-    fontSize: width * 0.035, // Slightly smaller font
+    fontSize: width * 0.032,
     fontWeight: '400',
-    color: '#0093dd',
-    textAlign: 'right',
-    marginTop: height * 0.01, // Add small gap
+    color: '#FFFFFF',
+    marginTop: height * 0.005,
   },
   containerText: {
-    marginTop: height * -0.35,
-    paddingHorizontal: width * 0.09,
+    paddingHorizontal: width * 0.05,
+    marginTop: height * 0.02,
   },
   welcometext: {
     fontWeight: '400',
-    color: '#0093dd',
-    fontSize: width * 0.05, // Responsive font size
+    color: '#FFFFFF',
+    fontSize: width * 0.05,
   },
   nametext: {
-    fontWeight: '500',
-    color: '#0093dd',
-    fontSize: width * 0.06, // 6% of screen width
+    fontWeight: '700',
+    color: '#FFFFFF',
+    fontSize: width * 0.065,
+    marginTop: height * 0.005,
   },
   textView: {
     backgroundColor: '#ffd9d9',
@@ -665,6 +659,53 @@ const styles = StyleSheet.create({
     fontSize: width * 0.04, // Adjust font size
     textAlign: 'center',
   },
+  buttonContainerBox: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginTop: height * 0.04,
+    paddingHorizontal: width * 0.05,
+    paddingVertical: height * 0.02,
+    backgroundColor: '#1a1630',
+    marginHorizontal: width * 0.05,
+    borderRadius: 12,
+    elevation: 10,
+    gap: width * 0.04,
+  },
+  mainButton: {
+    flex: 1,
+    backgroundColor: '#8686AC',
+    paddingVertical: height * 0.09,
+    paddingHorizontal: width * 0.02,
+    borderRadius: 8,
+    elevation: 8,
+    alignItems: 'center',
+    justifyContent: 'center',
+    minHeight: height * 0.08,
+  },
+  mainButtonText: {
+    color: '#FFFFFF',
+    fontSize: width * 0.04,
+    fontWeight: '700',
+    textAlign: 'center',
+  },
+  horizontalButton: {
+    flex: 1,
+    backgroundColor: '#8686AC',
+    paddingVertical: height * 0.09,
+    paddingHorizontal: width * 0.02,
+    borderRadius: 8,
+    elevation: 8,
+    alignItems: 'center',
+    justifyContent: 'center',
+    minHeight: height * 0.08,
+  },
+  horizontalButtonText: {
+    color: '#FFFFFF',
+    fontSize: width * 0.035,
+    fontWeight: '600',
+    textAlign: 'center',
+  },
   buttonContainer: {
     flexDirection: 'row',
     justifyContent: 'space-evenly',
@@ -673,30 +714,31 @@ const styles = StyleSheet.create({
     paddingHorizontal: width * 0.05,
   },
   button: {
-    backgroundColor: '#2ac3aa',
+    backgroundColor: '#FFFFFF',
     paddingVertical: height * 0.015,
     paddingHorizontal: width * 0.1,
     borderRadius: 8,
     elevation: 15,
   },
   buttonOut: {
-    backgroundColor: '#ee5a51',
+    backgroundColor: '#FFFFFF',
     paddingVertical: height * 0.015,
     paddingHorizontal: width * 0.1,
     borderRadius: 8,
     elevation: 15,
   },
   buttonText: {
-    color: '#fff',
+    color: '#272757',
     fontSize: width * 0.045,
     fontWeight: '600',
   },
   footer: {
     textAlign: 'center',
     fontSize: width * 0.035, // Responsive font size
-    color: 'black',
+    color: '#FFFFFF',
     marginBottom: height * 0.06, // Ensure margin from bottom
   },
 });
 
 export default DashboardScreen;
+

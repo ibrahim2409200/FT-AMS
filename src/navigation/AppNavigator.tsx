@@ -4,6 +4,7 @@ import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import SplashScreen from '../components/SplashScreen';
 import {LoginScreen, DashboardScreen, SignupScreen} from '../screens';
+import AddEmployeeScreen from '../screens/AddEmployeeScreen';
 import {RootState} from '../redux/store';
 import {loggedIn} from '../redux/slices/authSlice';
 import SideMenu from '../components/SideMenu';
@@ -15,6 +16,7 @@ export type RootStackParamList = {
   Dashboard: undefined;
   SideMenu: undefined;
   SignUp: undefined;
+  AddEmployee: undefined;
 };
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
@@ -61,6 +63,11 @@ const AppNavigator: React.FC = () => {
         <Stack.Screen
           name="SignUp"
           component={SignupScreen}
+          options={{headerShown: false}}
+        />
+        <Stack.Screen
+          name="AddEmployee"
+          component={AddEmployeeScreen}
           options={{headerShown: false}}
         />
         {/* <Stack.Screen name="Dashboard" component={DashboardScreen} options={{ headerShown: false }} /> */}

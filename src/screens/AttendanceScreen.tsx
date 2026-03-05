@@ -11,6 +11,7 @@ import {useAppDispatch} from '../redux/hooks';
 import {useSelector} from 'react-redux';
 import {fetchAttendanceLogs} from '../redux/slices/attendanceLogsSlice';
 import {RootState} from '../redux/store';
+import LinearGradient from 'react-native-linear-gradient';
 
 // Allowed status
 type AttendanceStatus = string | 'In' | 'Out';
@@ -154,7 +155,11 @@ const AttendanceScreen: React.FC = () => {
   };
 
   return (
-    <SafeAreaView style={styles.container}>
+    <LinearGradient
+      colors={['#8686AC', '#272757']}
+      locations={[0, 0.15]}
+      style={styles.gradient}>
+      <SafeAreaView style={styles.container}>
       <FlatList
         data={filteredData}
         renderItem={renderItem}
@@ -182,48 +187,54 @@ const AttendanceScreen: React.FC = () => {
           )
         }
       />
-    </SafeAreaView>
+      </SafeAreaView>
+    </LinearGradient>
   );
 };
 
 const styles = StyleSheet.create({
+  gradient: {
+    flex: 1,
+  },
   container: {
     flex: 1,
     padding: 10,
+    backgroundColor: 'transparent',
   },
   titleContainer: {
-    backgroundColor: '#0093dd',
+    backgroundColor: 'transparent',
     padding: 10,
   },
   title: {
-    color: '#fff',
+    color: '#FFFFFF',
     fontSize: 20,
     fontWeight: 'bold',
   },
   headerRow: {
     flexDirection: 'row',
-    backgroundColor: '#e6f8ff',
+    backgroundColor: '#FFFFFF',
     padding: 10,
   },
   headerCell: {
     flex: 1,
     fontWeight: 'bold',
-    color: '#0093dd',
+    color: '#272757',
     textAlign: 'center',
   },
   row: {
     flexDirection: 'row',
     padding: 10,
     borderBottomWidth: 1,
-    borderBottomColor: '#ccc',
-    color: 'black',
+    borderBottomColor: '#FFFFFF',
+    color: '#FFFFFF',
   },
   cell: {
     flex: 1,
-    color: 'black',
+    color: '#FFFFFF',
     justifyContent: 'center',
     textAlign: 'center',
   },
 });
 
 export default AttendanceScreen;
+

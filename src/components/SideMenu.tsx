@@ -19,6 +19,7 @@ import {RootState} from '../redux/store';
 import {useNavigation, NavigationProp} from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {AttendanceScreen} from '../screens';
+import AddEmployeeScreen from '../screens/AddEmployeeScreen';
 import Icon from 'react-native-vector-icons/AntDesign';
 
 const Drawer = createDrawerNavigator();
@@ -27,6 +28,7 @@ const Drawer = createDrawerNavigator();
 type DrawerParamList = {
   Dashboard: undefined;
   AttendanceScreen: undefined;
+  AddEmployee: undefined;
 };
 
 const SideMenu: React.FC = () => {
@@ -52,9 +54,9 @@ const SideMenu: React.FC = () => {
           navigation as DrawerNavigationProp<DrawerParamList>;
 
         return {
-          drawerStyle: {backgroundColor: '#e6f8ff', width: 250},
-          headerStyle: {backgroundColor: '#fff', height: 95},
-          headerTintColor: '#fff',
+          drawerStyle: {backgroundColor: '#8686AC', width: 250},
+          headerStyle: {backgroundColor: '#8686AC', height: 95},
+          headerTintColor: '#8686AC',
           headerTitle: '',
           headerLeft: () => (
             <View style={{flexDirection: 'row', alignItems: 'center'}}>
@@ -64,14 +66,14 @@ const SideMenu: React.FC = () => {
               <Icon
                   name="menu-fold"
                   size={25}
-                  color="#0093dd"
+                  color="#272757"
                   style={styles.iconHeader}
                 />
               </TouchableOpacity>
-              <Image
-                source={require('../../assets/images/dscLogo.png')}
+              {/* <Image
+                source={require('../../assets/images/logo12.png')}
                 style={styles.logoSmall}
-              />
+              /> */}
               
             </View>
           ),
@@ -93,6 +95,13 @@ const SideMenu: React.FC = () => {
           drawerLabel: 'Attendance Logs',
         }}
       />
+      <Drawer.Screen
+        name="AddEmployee"
+        component={AddEmployeeScreen}
+        options={{
+          drawerLabel: 'Add Employee',
+        }}
+      />
     </Drawer.Navigator>
   );
 };
@@ -100,10 +109,10 @@ const SideMenu: React.FC = () => {
 const CustomDrawerContent = (props: DrawerContentComponentProps) => (
   <View style={styles.drawerContainer}>
     <Image
-      source={require('../../assets/images/dscLogo.png')}
+      source={require('../../assets/images/logo12.png')}
       style={styles.logo}
     />
-    <Text style={styles.drawerTitle}>My App</Text>
+    <Text style={styles.drawerTitle}>AMS</Text>
 
     <DrawerItem
       label="Dashboard"
@@ -115,6 +124,11 @@ const CustomDrawerContent = (props: DrawerContentComponentProps) => (
       onPress={() => props.navigation.navigate('AttendanceScreen')}
       style={styles.menuItem}
     />
+    <DrawerItem
+      label="Add Employee"
+      onPress={() => props.navigation.navigate('AddEmployee')}
+      style={styles.menuItem}
+    />
   </View>
 );
 
@@ -122,7 +136,7 @@ const styles = StyleSheet.create({
   drawerContainer: {
     flex: 1,
     padding: 20,
-    backgroundColor: '#e6f8ff',
+    backgroundColor: '#8686AC',
   },
   iconHeader: {
     marginLeft: 10,
@@ -141,15 +155,16 @@ const styles = StyleSheet.create({
     height: 60,
   },
   menuItem:{
-    color: '#0093dd',
+    color: '#FFFFFF',
     borderBottomWidth:1
   },
   drawerTitle: {
     fontSize: 18,
     fontWeight: 'bold',
-    color: '#0093dd',
+    color: '#FFFFFF',
     marginBottom: 20,
   },
 });
 
 export default SideMenu;
+

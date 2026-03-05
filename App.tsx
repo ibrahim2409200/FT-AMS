@@ -22,33 +22,33 @@ const App = () => {
 
   // ✅ Auto-login logic on app cold start
   useEffect(() => {
-    const autoLoginIfUserExists = async () => {
-      try {
-        const storedUser = await AsyncStorage.getItem('user');
-        const deviceId = await AsyncStorage.getItem('deviceId');
-        console.log(storedUser,":::::app.tsx");
+    // const autoLoginIfUserExists = async () => {
+    //   try {
+    //     const storedUser = await AsyncStorage.getItem('user');
+    //     const deviceId = await AsyncStorage.getItem('deviceId');
+    //     console.log(storedUser,":::::app.tsx");
         
-        if (storedUser && deviceId) {
-          console.log('🔑 Stored user found, trying auto-login...');
-          try {
-            await store.dispatch(loginAsync(deviceId)).unwrap();
-            console.log('✅ Auto-login success');
-          } catch (err) {
-            Alert.alert('Error', 'Device ID is required.');
-            store.dispatch(logout());
-            console.log('❌ Auto-login failed:', err);
-            await AsyncStorage.removeItem('user');
-            console.log('cleared Auto-login failed:');
-          }
-        } else {
-          console.log('⚠️ No stored user, skipping auto-login.');
-        }
-      } catch (err) {
-        console.log('❌ Auto-login error:', err);
-      }
-    };
+    //     if (storedUser && deviceId) {
+    //       console.log('🔑 Stored user found, trying auto-login...');
+    //       try {
+    //         await store.dispatch(loginAsync(deviceId)).unwrap();
+    //         console.log('✅ Auto-login success');
+    //       } catch (err) {
+    //         Alert.alert('Error', 'Device ID is required.');
+    //         store.dispatch(logout());
+    //         console.log('❌ Auto-login failed:', err);
+    //         await AsyncStorage.removeItem('user');
+    //         console.log('cleared Auto-login failed:');
+    //       }
+    //     } else {
+    //       console.log('⚠️ No stored user, skipping auto-login.');
+    //     }
+    //   } catch (err) {
+    //     console.log('❌ Auto-login error:', err);
+    //   }
+    // };
 
-    autoLoginIfUserExists();
+    // autoLoginIfUserExists();
   }, []);
 
   useEffect(() => {
